@@ -1,7 +1,11 @@
+/*
+* 	Alex Ramponi
+* 	No changes made in this file
+* 	Lupoli CSCE-314-502, Fall 2019
+*/
 public class Project1 {
 	public static void main(String[] args) 
 	{
-		System.out.println("We're live");
 		// Instantiate PrimeOperations Class
 		PrimeOperations testOne = new PrimeOperations();
 
@@ -9,17 +13,17 @@ public class Project1 {
 		testOne.generatePrimes(21);
 		testOne.printPrimes();
 
-//		// Generate and test Twin Primes
-//		PrimeOperations testTwo = new PrimeOperations();
-//		testTwo.generatePrimes(100);
-//		testTwo.generateTwinPrimes();
-//		testTwo.printTwins();
-//
-//		// Generate and test Hexagonal crosses
-//		PrimeOperations testThree = new PrimeOperations();
-//		testThree.generatePrimes(2000);
-//		testThree.generateTwinPrimes();
-//		testThree.generateHexPrimes();
-//		testThree.printHexes();
+		// Generate and test Twin Primes
+		PrimeOperations testTwo = new PrimeOperations();
+		testTwo.generatePrimes(100);
+		testTwo.generateTwinPrimes();
+		testTwo.printTwins();
+
+		// Generate and test Hexagonal crosses
+		PrimeOperations testThree = new PrimeOperations();
+		testThree.generatePrimes(2000);
+		testThree.generateTwinPrimes();
+		testThree.generateHexPrimes();
+		testThree.printHexes();
 	}
 }
