@@ -44,10 +44,10 @@ public class MainWindow extends JFrame
 		primesPanel.add(tfPrimeFileName);
 		tfPrimeFileName.setColumns(10);
 
-		lblCrossCount = new JLabel("1000");
-		lblCrossCount.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblCrossCount.setBounds(900, 10, 93, 58);
-		primesPanel.add(lblCrossCount);
+		lblPrimeCount = new JLabel("0");
+		lblPrimeCount.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblPrimeCount.setBounds(900, 10, 93, 58);
+		primesPanel.add(lblPrimeCount);
 
 		JLabel primesFileLabel = new JLabel("Primes File");
 		primesFileLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -56,10 +56,38 @@ public class MainWindow extends JFrame
 
 		JButton btnLoad = new JButton("Load");
 		btnLoad.setBounds(800, 66, 85, 55);
+		btnLoad.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				String fileName=tfPrimeFileName.getText();
+				if(FileAccess.loadPrimes(m_Primes,fileName)){
+					lblStatus.setText("Status: Successfully loaded primes to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+				else{
+					lblStatus.setText("Status: Failed to load primes to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+			}
+		});
 		primesPanel.add(btnLoad);
 
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(890, 66, 85, 55);
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				String fileName=tfPrimeFileName.getText();
+				if(FileAccess.savePrimes(m_Primes,fileName)){
+					lblStatus.setText("Status: Successfully saved primes to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+				else{
+					lblStatus.setText("Status: Failed to save primes to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+			}
+		});
 		primesPanel.add(btnSave);
 		//=======================================================
 
@@ -75,10 +103,10 @@ public class MainWindow extends JFrame
 		crossPanel.add(tfCrossFileName);
 		tfCrossFileName.setColumns(10);
 
-		lblPrimeCount = new JLabel("10000");
-		lblPrimeCount.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblPrimeCount.setBounds(900, 10, 93, 58);
-		crossPanel.add(lblPrimeCount);
+		lblCrossCount = new JLabel("0");
+		lblCrossCount.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblCrossCount.setBounds(900, 10, 93, 58);
+		crossPanel.add(lblCrossCount);
 
 		JLabel crossFileLabel = new JLabel("Hexagon Cross File");
 		crossFileLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -88,9 +116,39 @@ public class MainWindow extends JFrame
 		JButton btnCrossLoad = new JButton("Load");
 		btnCrossLoad.setBounds(800, 66, 85, 55);
 		crossPanel.add(btnCrossLoad);
+		btnCrossLoad.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				String fileName=tfCrossFileName.getText();
+				if(FileAccess.loadCrosses(m_Primes,fileName)){
+					lblStatus.setText("Status: Successfully loaded hexagon crosses to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+				else{
+					lblStatus.setText("Status: Failed to load hexagon crosses to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+			}
+		});
 
 		JButton btnCrossSave = new JButton("Save");
 		btnCrossSave.setBounds(890, 66, 85, 55);
+
+		btnCrossSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				String fileName=tfCrossFileName.getText();
+				if(FileAccess.saveCrosses(m_Primes,fileName)){
+					lblStatus.setText("Status: Successfully saved hexagon crosses to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+				else{
+					lblStatus.setText("Status: Failed to save hexagon crosses to file "+Config.DATAPATH+fileName);
+					updateStats();
+				}
+			}
+		});
+
 		crossPanel.add(btnCrossSave);
 		////=======================================================
 
@@ -104,11 +162,29 @@ public class MainWindow extends JFrame
 		JButton btnGeneratePrimes = new JButton("Generate Primes");
 		btnGeneratePrimes.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnGeneratePrimes.setBounds(30, 10, 300, 65);
+
+		btnGeneratePrimes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				popupGeneratePrimes();
+			}
+		});
 		generatePanel.add(btnGeneratePrimes);
 
 		JButton btnGenerateCrosses = new JButton("Generate Crosses");
 		btnGenerateCrosses.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnGenerateCrosses.setBounds(660, 10, 300, 65);
+
+		btnGenerateCrosses.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				m_Primes.generateTwinPrimes();
+				m_Primes.generateHexPrimes();
+				m_Primes.printHexes();
+				updateStats();
+				lblStatus.setText("Status: Successfully generated crosses.");
+			}
+		});
 		generatePanel.add(btnGenerateCrosses);
 
 		lblLargestPrime = new JLabel("The largest prime has 0 digits.");
@@ -134,6 +210,7 @@ public class MainWindow extends JFrame
 		//=======================================================
 
 		setVisible(true);
+		updateStats();
 	}
 
 	protected void popupGeneratePrimes()
@@ -251,6 +328,20 @@ public class MainWindow extends JFrame
 	// This function updates all the GUI statistics. (# of primes, # of crosses, etc)
 	private void updateStats()
 	{
+		//Update the total # of primes
+		Integer primeCount = m_Primes.primeCount();
+		lblPrimeCount.setText(primeCount.toString());
+
+		//Update the total # of crosses
+		Integer crossCount = m_Primes.crossesCount();
+		lblCrossCount.setText(crossCount.toString());
+
+		//Get the largest prime digit size
+		Integer largestPrimeDigit = m_Primes.sizeofLastPrime();
+		lblLargestPrime.setText("The largest prime has "+largestPrimeDigit+" digits.");
+		//Get the largest cross digit size
+		Pair<Integer> largestCrossDigits = m_Primes.sizeofLastCross();
+		lblLargestCross.setText("The largest cross has "+largestCrossDigits.left()+" and "+largestCrossDigits.right()+" digits.");
  	}
 
 }

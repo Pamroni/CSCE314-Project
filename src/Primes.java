@@ -114,17 +114,27 @@ public class Primes {
 
   // Count the number of digits in the last (and thus largest) prime.
   public int sizeofLastPrime() {
-    BigInteger lastPrime = primeList.get(primeList.size() - 1);
-    return lastPrime.toString().length();
+    if(primeList.size()!=0){
+      BigInteger lastPrime = primeList.get(primeList.size() - 1);
+      return lastPrime.toString().length();
+    }
+    else{
+      return 0;
+    }
   }
 
   // Count the number of digits in the two entries in the last (and thus largest) hexagon cross
   public Pair<Integer> sizeofLastCross() {
-    Pair<BigInteger> lastCross = crossList.get(crossList.size() - 1);
-    Integer leftSize = lastCross.left().toString().length();
-    Integer rightSize = lastCross.right().toString().length();
-    Pair<Integer> pairSize = new Pair<Integer>(leftSize, rightSize);
-    return pairSize;
+    if(crossList.size()!=0){
+      Pair<BigInteger> lastCross = crossList.get(crossList.size() - 1);
+      Integer leftSize = lastCross.left().toString().length();
+      Integer rightSize = lastCross.right().toString().length();
+      Pair<Integer> pairSize = new Pair<Integer>(leftSize, rightSize);
+      return pairSize;
+    }
+    else{
+      return new Pair<Integer>(0,0);
+    }
   }
 
   // Return the number of primes
