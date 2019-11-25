@@ -29,6 +29,7 @@ public class MainWindow extends JFrame
 	
 	MainWindow(String name, Primes p)
 	{
+		popupGeneratePrimes();
 	}
 
 	protected void popupGeneratePrimes()
