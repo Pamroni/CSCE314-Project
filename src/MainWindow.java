@@ -29,7 +29,12 @@ public class MainWindow extends JFrame
 	
 	MainWindow(String name, Primes p)
 	{
-		popupGeneratePrimes();
+		lblStatus = new JLabel();
+		m_Primes = p;
+		JFrame frame = new JFrame(name);
+		frame.setSize(1000,400);
+		frame.setVisible(true);
+		frame.setBackground(Color.decode("#500000"));
 	}
 
 	protected void popupGeneratePrimes()
@@ -95,6 +100,7 @@ public class MainWindow extends JFrame
        		m_Primes.generatePrimes(start, count);
        		lblStatus.setText("Status: Excited. Primes have been generated.");
        		updateStats();
+       		m_Primes.printPrimes();
       		dPrimes.dispose();
       	}
       	catch(NumberFormatException ex)
