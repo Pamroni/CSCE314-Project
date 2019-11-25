@@ -1,19 +1,9 @@
-import javax.swing.JFrame;
-import java.awt.Color;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.math.BigInteger;
-import javax.swing.JPanel;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.SwingConstants;
 
 public class MainWindow extends JFrame
 {
@@ -30,11 +20,33 @@ public class MainWindow extends JFrame
 	MainWindow(String name, Primes p)
 	{
 		lblStatus = new JLabel();
+
 		m_Primes = p;
-		JFrame frame = new JFrame(name);
-		frame.setSize(1000,400);
-		frame.setVisible(true);
-		frame.setBackground(Color.decode("#500000"));
+
+		JFrame mainFrame = new JFrame(name);
+		mainFrame.setSize(1000,400);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//
+//		Container mainContentPane = mainFrame.getContentPane();
+//		mainContentPane.setBackground(Color.decode("#500000"));
+//
+//
+//		JPanel primesPanel = new JPanel();
+//		primesPanel.setLayout(new FlowLayout());
+//
+//		tfPrimeFileName = new JTextField();
+//		tfPrimeFileName.setSize(886,58);
+//		//primesPanel.setLayout(null);
+//		lblPrimeCount = new JLabel();
+//		lblPrimeCount.setSize(114,66);
+//		primesPanel.add(lblPrimeCount);
+//		primesPanel.add(tfPrimeFileName);
+//
+//		mainContentPane.add(primesPanel);
+//
+//		mainFrame.pack();
+//		mainFrame.setVisible(true);
+
 	}
 
 	protected void popupGeneratePrimes()
