@@ -27,3 +27,8 @@ hs_err_pid*
 .idea
 
 *.pdf
+/bin/
+
+.classpath
+.DS_STORE
+.project
