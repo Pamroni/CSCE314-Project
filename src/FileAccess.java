@@ -55,6 +55,10 @@ public class FileAccess {
   //Save whatever primes are in primes to the file
   public static boolean savePrimes(Primes primes, String filename) {
     try {
+      //We need to make sure the data directory is there or else we get an exception
+      new File(Config.DATAPATH).mkdir();
+
+      //Once we get the directory we can create the file there
       File file = new File(Config.DATAPATH + filename);
       file.createNewFile();
 
@@ -77,6 +81,10 @@ public class FileAccess {
   //Save whatever crosses are in memory to the given file name
   public static boolean saveCrosses(Primes primes, String filename) {
     try {
+      //We need to make sure the data directory is there or else we get an exception
+      new File(Config.DATAPATH).mkdir();
+
+      //Once the directory is set we can save the file there
       File file = new File(Config.DATAPATH + filename);
       file.createNewFile();
 
