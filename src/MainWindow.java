@@ -233,6 +233,7 @@ public class MainWindow extends JFrame
 		updateStats();
 	}
 
+	//Provided popupGeneratePrimes window
 	protected void popupGeneratePrimes()
 	{
 		JDialog dPrimes = new JDialog(this, "Prime Number Generation");
@@ -258,7 +259,7 @@ public class MainWindow extends JFrame
 		
 		JPanel pnlGenerate = new JPanel();
 		pnlGenerate.setLayout(new GridBagLayout());
-		
+		//Reads in the # of primes to generate
 		JLabel lblCount = new JLabel("Number of Primes to Generate");
 		lblCount.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		pnlGenerate.add(lblCount, gbcPanel);
@@ -268,7 +269,7 @@ public class MainWindow extends JFrame
 		tfCount.setColumns(30);
 		gbcPanel.gridx = 1;
 		pnlGenerate.add(tfCount, gbcPanel);
-		
+		//Reads in the starting # for the lowest prime
 		JLabel lblStart = new JLabel("Starting Number (does not have to be prime)");
 		lblStart.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		gbcPanel.gridx = 0;
@@ -285,7 +286,8 @@ public class MainWindow extends JFrame
 		
 		JPanel pnlButtons = new JPanel();
 		pnlButtons.setLayout(new GridBagLayout());
-		
+
+		//Generate primes calls the generatePrimes for the member prime object that will use the given values
 		JButton btnGeneratePrimes = new JButton("Generate Primes");
 		btnGeneratePrimes.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -310,7 +312,8 @@ public class MainWindow extends JFrame
 		gbcPanel.gridx = 0;
 		gbcPanel.gridy = 0;
 		pnlButtons.add(btnGeneratePrimes, gbcPanel);
-		
+
+		//Button to prevent the cancel of the generation. This just closes the window
 		JButton btnCancel = new JButton("Cancel Generation");
 		btnCancel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
