@@ -9,36 +9,36 @@ import java.util.Scanner;
 
 public class FileAccess {
 
-  //Load the filename into the primes in memory
+  // Load the filename into the primes in memory
   public static boolean loadPrimes(Primes primes, String filename) {
     try {
       File readFile = new File(Config.DATAPATH + filename);
       Scanner reader = new Scanner(readFile);
-      //Process through the file and save each biginteger to the primes passed
+      // Process through the file and save each biginteger to the primes passed
       while (reader.hasNextLine()) {
         String currentPrime = reader.nextLine();
         BigInteger prime = new BigInteger(currentPrime);
         primes.addPrime(prime);
       }
     } catch (Exception e) {
-      //Any exception just return false
+      // Any exception just return false
       e.printStackTrace();
       return false;
     }
     return true;
   }
-  //Load the filename into the crosses in memory
+  // Load the filename into the crosses in memory
   public static boolean loadCrosses(Primes primes, String filename) {
     try {
       File readFile = new File(Config.DATAPATH + filename);
       Scanner reader = new Scanner(readFile);
-      //Process through the file and save each pair to the crosses passed
+      // Process through the file and save each pair to the crosses passed
       while (reader.hasNextLine()) {
         String crossRow = reader.nextLine();
-        //The crosses are stored as #, # with a , and a space seperating both numbers
+        // The crosses are stored as #, # with a , and a space seperating both numbers
         String[] hexes = crossRow.split(", ");
 
-        //Convert both strings to bigintegers and save the pair
+        // Convert both strings to bigintegers and save the pair
         BigInteger left = new BigInteger(hexes[0]);
         BigInteger right = new BigInteger(hexes[1]);
 
@@ -52,20 +52,20 @@ public class FileAccess {
     return true;
   }
 
-  //Save whatever primes are in primes to the file
+  // Save whatever primes are in primes to the file
   public static boolean savePrimes(Primes primes, String filename) {
     try {
-      //We need to make sure the data directory is there or else we get an exception
+      // We need to make sure the data directory is there or else we get an exception
       new File(Config.DATAPATH).mkdir();
 
-      //Once we get the directory we can create the file there
+      // Once we get the directory we can create the file there
       File file = new File(Config.DATAPATH + filename);
       file.createNewFile();
 
       FileWriter writer = new FileWriter(file);
-      //Use the IterablePrimes iterator and process through everything with a foreach loop
+      // Use the IterablePrimes iterator and process through everything with a foreach loop
       Primes.IterablePrimes iterablePrimes = primes.iteratePrimes();
-      for(BigInteger prime: iterablePrimes){
+      for (BigInteger prime : iterablePrimes) {
         System.out.println(prime.toString());
         writer.write(prime.toString() + "\n");
         writer.flush();
@@ -78,23 +78,23 @@ public class FileAccess {
     return true;
   }
 
-  //Save whatever crosses are in memory to the given file name
+  // Save whatever crosses are in memory to the given file name
   public static boolean saveCrosses(Primes primes, String filename) {
     try {
-      //We need to make sure the data directory is there or else we get an exception
+      // We need to make sure the data directory is there or else we get an exception
       new File(Config.DATAPATH).mkdir();
 
-      //Once the directory is set we can save the file there
+      // Once the directory is set we can save the file there
       File file = new File(Config.DATAPATH + filename);
       file.createNewFile();
 
       FileWriter writer = new FileWriter(file);
-      //Use the inner iterablecrosses object to iterate through the crosses
+      // Use the inner iterablecrosses object to iterate through the crosses
       Primes.IterableCrosses iterableCrosses = primes.iterateCrosses();
-      for(Pair<BigInteger> pair: iterableCrosses){
+      for (Pair<BigInteger> pair : iterableCrosses) {
         BigInteger left = pair.left();
         BigInteger right = pair.right();
-        //Save the pair as #, # so the load can process it correctly
+        // Save the pair as #, # so the load can process it correctly
         writer.write(left + ", " + right + "\n");
         writer.flush();
       }
