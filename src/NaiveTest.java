@@ -17,6 +17,7 @@ public class NaiveTest
 		return true;
 	}
 
+	//My isPrime method from the first assignment
 	public static boolean isPrime(BigInteger value){
 		if (value.compareTo(BigInteger.valueOf(2)) < 0) { //If it's less than 2,
 			//Both 0 and 1 are not primes

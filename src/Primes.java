@@ -76,7 +76,7 @@ public class Primes {
     for (int i = 0; i < count; i++) {
       boolean found = false;
       while (!found) {
-        if (NaiveTest.isPrime(candidate)) // You should implement a faster primality test!
+        if (NaiveTest.isPrime(candidate)) //Uses my custom implementation
         {
           primeList.add(candidate);
           found = true;
@@ -115,6 +115,7 @@ public class Primes {
   // Count the number of digits in the last (and thus largest) prime.
   public int sizeofLastPrime() {
     if(primeList.size()!=0){
+      //Get the top element in the list and return the string length
       BigInteger lastPrime = primeList.get(primeList.size() - 1);
       return lastPrime.toString().length();
     }
@@ -126,6 +127,7 @@ public class Primes {
   // Count the number of digits in the two entries in the last (and thus largest) hexagon cross
   public Pair<Integer> sizeofLastCross() {
     if(crossList.size()!=0){
+      //Pull the final element and calculate the values by looking at the string length
       Pair<BigInteger> lastCross = crossList.get(crossList.size() - 1);
       Integer leftSize = lastCross.left().toString().length();
       Integer rightSize = lastCross.right().toString().length();
@@ -133,6 +135,7 @@ public class Primes {
       return pairSize;
     }
     else{
+      //If it is empty, then return 0
       return new Pair<Integer>(0,0);
     }
   }
@@ -147,40 +150,55 @@ public class Primes {
     return crossList.size();
   }
 
+  //Setup our iterable primes for the for each loop and processing
   public class IterablePrimes implements Iterable<BigInteger> {
-    private int pos = 0;
 
-    public BigInteger next() {
-      return primeList.get(pos++);
-    }
-
-    public boolean hasNext() {
-      return primeList.size() > pos;
-    }
-
+    @Override
     public Iterator<BigInteger> iterator() {
-      // Not needed since we have a wrapper of iteratePrimes
-      return null;
+      return new Iterator<BigInteger>() {
+        //Keep track of our position
+        private int pos = 0;
+
+        //Return if there's an element avalible
+        @Override
+        public boolean hasNext() {
+          return primeList.size() > pos;
+        }
+
+        //Return the next element
+        @Override
+        public BigInteger next() {
+          return primeList.get(pos++);
+        }
+      };
     }
+
   }
 
+  //Return the iterator
   public IterablePrimes iteratePrimes() {
     return new IterablePrimes();
   }
 
+  //Custom iterator for the Hexagon Crosses
   public class IterableCrosses implements Iterable<Pair<BigInteger>> {
-		private int pos = 0;
-
-		public Pair<BigInteger> next() {
-			return crossList.get(pos++);
-		}
-
-		public boolean hasNext() {
-			return crossList.size() > pos;
-		}
-
 		public Iterator<Pair<BigInteger>> iterator() {
-			return null;
+      return new Iterator<Pair<BigInteger>>() {
+        //Use this to keep track of where we are at
+        private int pos = 0;
+
+        //If there is anything left in the list return true
+        @Override
+        public boolean hasNext() {
+          return crossList.size() > pos;
+        }
+
+        //Return the next element
+        @Override
+        public Pair<BigInteger> next() {
+          return crossList.get(pos++);
+        }
+      };
 		}
 	}
 
